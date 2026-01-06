@@ -1,6 +1,6 @@
-# google-calender-connect-tool
+# google-calender-connect-tool (v2)
 
-Lightweight Python helper (`calender.calender`) for real Google Calendar CRUD operations. It wraps the official Google Calendar API client, handles OAuth tokens per user, and exposes simple methods (`read`, `write`, `modify`, `delete`) so you can manage reservations in a shared calendar with owner metadata.
+This helper still provides the standalone OAuth + CRUD utilities, but it is also embedded inside the Cloud LLM Based Scheduler project where `CalendarManager` depends on `calender.calender` for live syncs. Keeping these docs up-to-date ensures both standalone and embedded scenarios share the same expectations.
 
 ## Requirements
 
@@ -65,6 +65,7 @@ Make sure:
 For backend-only workflows, use `calender.from_service_account_file(credentials_file, calendar_id=...)`. Make sure the service account email has access to the target calendar or use domain-wide delegation.
 
 ## Notes
+- In the scheduler project the helper runs in “local-only” mode until `calendar_settings.json` references real credentials/token files. Once OAuth succeeds, the same APIs documented above start writing real events.
 
 - The helper normalizes datetimes to ISO-8601 UTC so naive vs aware `datetime` comparisons will not break.
 - Owner metadata is stored under `event["extendedProperties"]["private"]["owner"]` to keep track of which Google account created/updated an event.
